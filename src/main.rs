@@ -235,7 +235,10 @@ fn main() {
 
     // get the two value from the function 
     let (val_1, val_2) = get_some_3(3);
-    println!("Nums {} {} ", val_1,val_2)
+    println!("Nums {} {} ", val_1,val_2);
+
+    // function and list
+    let num_list = vec![1,2,3,4,5];
 
 }
 
@@ -253,5 +256,9 @@ fn get_some_2(x: i32, y: i32) -> i32 {
 
 //function (return two value from 1 input) 
 fn get_some_3(x:i32) -> (i32,i32) {
+    return (x+1 , x+2);
+}
+
+fn sum_list(x:i32) -> (i32,i32) {
     return (x+1 , x+2);
 }
