@@ -228,4 +228,30 @@ fn main() {
     }
     println!("Vec length {}", vec2.len());
     println!("Pop : {:?}", vec2.pop());
+    
+    // function called here
+    // get_some(5,4);
+    println!("{}", get_some_2(5, 4));
+
+    // get the two value from the function 
+    let (val_1, val_2) = get_some_3(3);
+    println!("Nums {} {} ", val_1,val_2)
+
+}
+
+// function
+
+// fn get_some(x:i32,y:i32){
+//     println!("{} + {} = {}", x, y, x + y);
+// }
+
+// function (if we need to return and value)
+
+fn get_some_2(x: i32, y: i32) -> i32 {
+    x + y
+}
+
+//function (return two value from 1 input) 
+fn get_some_3(x:i32) -> (i32,i32) {
+    return (x+1 , x+2);
 }
