@@ -161,5 +161,71 @@ fn main() {
     let byte_arr1 = st5.as_bytes();
     let st6 = &st5[0..6];
     println!("string length {}", st6.len());
+    st5.clear();
+    // combine string
+    let st6 = String::from("just some");
+    let st7 = String::from("words");
+    let st8 = st6 + &st7;
+    for char in st8.bytes(){
+        println!("{}", char);
+    }
+    // casting
+    let int_u8: u8 = 5;
+    let int2_u8: u8 = 4;
+    let int3_u32: u32 = (int_u8 as u32) + (int2_u8 as u32);
     
+    // Enums
+    enum DayName {
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
+    Sunday
+    }
+// . is used when you have a value on the left-hand-side. :: is used when you have a type or module. Or: . is for value member access, :: is for namespace member access.
+    impl DayName {
+        fn is_weekend(&self) -> bool {
+            match self {
+                DayName::Saturday | DayName::Sunday => true,
+                _ => false
+            }
+        }
+    }
+    let today = DayName::Monday;
+    match today{ 
+        DayName::Monday => println!("Everyone Hates Monday"),
+        DayName::Tuesday => println!("Everyone Hates Tuesday"),
+        DayName::Wednesday => println!("Everyone Hates Wednesday"),
+        DayName::Thursday => println!("Everyone Hates Thursday"),
+        DayName::Friday => println!("Everyone Hates Friday"),
+        DayName::Saturday => println!("Saturday is the fking error"),
+        DayName::Sunday => println!("Everyone Hates Sunday"),
+    }
+    println!("is today the weekend {}", today.is_weekend());
+
+    // vectors
+    // like array but they can grow if mutable
+    // and stores data as same type
+    let vec1: Vec<i32> = Vec::new();
+    let mut vec2 = vec![1,2,3,4];
+    vec2.push(5);
+    // print from specific index
+    println!("1st : {}", vec2[0]);
+    // verify value exists 
+    let second: &i32 = &vec2[1];
+    match vec2.get(1){
+        Some(second) => println!("2nd : {}",second),
+        None => println!("No 2nd value")
+    }
+    // we can cycle and can change value 
+    for i in &mut vec2{
+        *i *= 2;
+    }
+    for i in &vec2{
+        println!("{}",i);
+    }
+    println!("Vec length {}", vec2.len());
+    println!("Pop : {:?}", vec2.pop());
 }
