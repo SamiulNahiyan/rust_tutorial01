@@ -5,7 +5,8 @@ use rand::Rng;
 use std::io::{Write,BufRead,BufReader,ErrorKind};
 use std::fs::File;
 use std::cmp::Ordering;
-
+use std::collections::HashMap;
+use std::f64::consts::PI;
 
 fn main() {
     println!("What is your Name?");
@@ -239,7 +240,105 @@ fn main() {
 
     // function and list
     let num_list = vec![1,2,3,4,5];
+    println!("sum of list = {}", sum_list(&num_list));
 
+    // generic function print 
+    println!("5 + 4 = {}",get_sum_gen(5, 4));
+    println!("5.2 + 4.6 = {}",get_sum_gen(5.2, 4.6));
+
+    // ownership check 01
+    owner_ship();
+
+    // print_str(st1);
+    let str4 = print_return_str(st1);
+    println!("str3 = {}", st3);
+
+    let mut str_1 = String::from("Nahiyan ");
+    change_string(&mut str_1);
+
+    // hashMaps function 
+    // hash maps are going to be used to store key value pairs
+    let mut heroes = HashMap::new();
+    // k is the key and v is the value 
+    heroes.insert("Super Man ", "nigga");
+    heroes.insert("Bat-Man ", "rich kid");
+    heroes.insert("Wonder Woman  ", "old lady");
+
+    // we can iterate over hashmaps
+    for(k, v) in heroes.iter(){
+        println!("{} = {}", k,v)
+    }
+    // println!("heroes {}", heroes.len());
+    if heroes.contains_key(&"Bat-Man"){
+        let the_batman = heroes.get(&"Bat-Man");
+        match the_batman {
+            Some(x) => println!("He is a hero"),
+            None => println!("he is gay")
+        }
+    }
+
+    // struct
+    struct Customer{
+        name: String,
+        address: String,
+        balance: f32
+    }
+
+    let mut bob: Customer = Customer{
+        name: String::from("hacker boii"),
+        address: String::from("aayy alakai aayy tui"),
+        balance: 420.69
+    };
+
+    // change a value
+    bob.address = String::from("420 road 69no. house");
+
+    struct Rectangle<T, U>{
+        length: T,
+        height: U,
+    }
+    let rec = Rectangle{
+        length:4,
+        height:10.5
+    };
+    trait Shape {
+        fn new(length: f32, width:f32) -> Self;
+        fn area(&self) -> f32;
+    }
+    struct Rectange01{
+        length01: f32,
+        width01: f32
+    }
+    struct Circle{
+    length02: f32,
+    width02: f32
+    }
+
+    // for rectangle
+    impl Shape for Rectange01{
+        fn new(length01: f32,width01: f32) -> Rectange01{
+            return Rectange01{length01,width01};
+        }
+        fn area(&self) -> f32 {
+            return self.length01 * self.width01;
+        }
+    }
+
+    // for circle 
+    impl Shape for Circle{
+        fn new(length02: f32,width02: f32) -> Circle{
+            return Circle{length02,width02};
+        }
+        fn area(&self) -> f32 {
+            return (self.length02 / 2.0).powf(2.0) * PI;
+        }
+    }
+
+    // we can refer to this as if they are shapes
+    let rec: Rectange01 = Shape::new(10.0, 10.0);
+    let circ: Circle = Shape::new(10.0, 10.0);
+    println!("rec area : {} ", rec.area());
+    println!("circle area : {} ", circ.area());
 }
 
 // function
@@ -259,6 +358,56 @@ fn get_some_3(x:i32) -> (i32,i32) {
     return (x+1 , x+2);
 }
 
-fn sum_list(x:i32) -> (i32,i32) {
-    return (x+1 , x+2);
+fn sum_list(list: &[i32]) -> i32 {
+    let mut sum = 0;
+    for &val in list.iter(){
+        sum += &val;
+    }
+    sum
+}
+
+// generic function
+// we have to use this 
+
+use std::ops::Add;
+
+fn get_sum_gen<T:Add<Output = T>>(x: T, y: T) -> T{
+    // we cant just return x + y, this add operator can not be used in this generic function
+    return x + y;
+}
+
+// the concept of ownership
+
+// stack : stores values in a last in first out format
+// Data on the stack must have a defined fixed size
+
+// HEAP : when putting data on the heap you request a certain amount of space.
+// The OS finds space available and returns an address for that space called pointer
+
+// RULES 
+  // 1. Each values has a variable that's called it's owner 
+  // 2. There is only one owner at a time 
+  // 3. When the owner goes out of scope that value disappears
+
+fn owner_ship(){
+    let str_1 = String::from("world");
+    let str_2 = str_1.clone();
+    println!("Hello {}", str_2);
+    let str_3 = str_1;  // we copy str_1 into str_2, so str_1 does don't exists anymore 
+    println!("Hello {}", str_3);
+    // println!("Hello {}", str_1) this will not work because position of codes matters, u assigner str_3 = str_1
+}
+
+fn print_str(x: String){
+    println!("A string {}", x);
+}
+
+fn print_return_str(x : String) -> String{
+    println!("A string {}", x);
+    x
+}
+
+fn change_string(name: &mut String){
+    name.push_str("is happy");
+    println!("message : {}", name);
 }
