@@ -34,5 +34,5 @@ mod pizza_order{
 }
 
 pub fn order_food(){
-  crate::moduels::pizza_order::help_customer::take_order()
+  crate::modules::pizza_order::help_customer::take_order()
 }

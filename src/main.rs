@@ -1,6 +1,6 @@
 #![allow(unused)]
 
-mod moduels;
+mod modules;
 
 use rand::Rng;
 use std::cmp::Ordering;
@@ -372,7 +372,7 @@ fn sum_list(list: &[i32]) -> i32 {
 
 use std::ops::Add;
 
-use crate::moduels::order_food;
+use crate::modules::order_food;
 
 fn get_sum_gen<T: Add<Output = T>>(x: T, y: T) -> T {
     // we cant just return x + y, this add operator can not be used in this generic function
