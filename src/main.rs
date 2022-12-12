@@ -1,47 +1,49 @@
 #![allow(unused)]
 
-use std::io;
+mod moduels;
+
 use rand::Rng;
-use std::io::{Write,BufRead,BufReader,ErrorKind};
-use std::fs::File;
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::f64::consts::PI;
+use std::fs::File;
+use std::io;
+use std::io::{BufRead, BufReader, ErrorKind, Write};
 
 fn main() {
     println!("What is your Name?");
     let mut name: String = String::new();
     let greeting: &str = "nice to meet you";
-    io::stdin().read_line(&mut name)
+    io::stdin()
+        .read_line(&mut name)
         .expect("didn't receive input");
     println!("Hello {}! {}", name.trim_end(), greeting);
-    // another type of variable 
+    // another type of variable
     const ONE_MIL: u32 = 1_000_000;
-    println!("{}",ONE_MIL );
+    println!("{}", ONE_MIL);
     // how can we define float
     const PI: f32 = 3.141;
     // we need to define char with single quotes and string with double quotes
     let age: &str = "42";
     // we can define variable with the same name with different data types
-    // here u32 means unsigned 32 bit 
-    let mut age: u32 = age.trim().parse()
-        .expect("age wasn't assigned as number");
+    // here u32 means unsigned 32 bit
+    let mut age: u32 = age.trim().parse().expect("age wasn't assigned as number");
     age = age + 1;
-    println!("i am {} and i want $ {}", age, ONE_MIL );
+    println!("i am {} and i want $ {}", age, ONE_MIL);
 
     // data types
     // unsigned integer : u8, u16, u32, u64, u128, usize
     // singed integer : i8, i16, i32, i64, i128, isize
-    println!("Max u32 : {}",u32::MAX);
-    println!("Max u64 : {}",u64::MAX);
-    println!("Max usize : {}",usize::MAX);
-    println!("Max u128 : {}",u128::MAX);
-    println!("Max f32 : {}",f32::MAX);
-    println!("Max f64 : {}",f64::MAX);
+    println!("Max u32 : {}", u32::MAX);
+    println!("Max u64 : {}", u64::MAX);
+    println!("Max usize : {}", usize::MAX);
+    println!("Max u128 : {}", u128::MAX);
+    println!("Max f32 : {}", f32::MAX);
+    println!("Max f64 : {}", f64::MAX);
 
     // another data type is booleans
     let is_true: bool = true;
-    let my_grade="A";
+    let my_grade = "A";
 
     // math
     let num_1: f32 = 1.111111111111111;
@@ -50,61 +52,57 @@ fn main() {
     println!("f64:{}", num_2 + 0.111111111111111);
     let mut num_3: u32 = 5;
     let num_4: u32 = 4;
-    println!("5 + 4 : {}",num_3 + num_4);
-    println!("5 - 4 : {}",num_3 - num_4);
-    println!("5 / 4 : {}",num_3 / num_4);
-    println!("5 * 4 : {}",num_3 * num_4);
-    println!("5 % 4 : {}",num_3 % num_4);
+    println!("5 + 4 : {}", num_3 + num_4);
+    println!("5 - 4 : {}", num_3 - num_4);
+    println!("5 / 4 : {}", num_3 / num_4);
+    println!("5 * 4 : {}", num_3 * num_4);
+    println!("5 % 4 : {}", num_3 % num_4);
     num_3 += 1;
 
     // generate random values
     let random_num = rand::thread_rng().gen_range(1..101);
     println!("random : {}", random_num);
-    
-    // if statement 
+
+    // if statement
     let age2: i32 = 8;
-    if (age2 >= 1) && (age2 <= 18){
+    if (age2 >= 1) && (age2 <= 18) {
         println!("important birthday");
-    } else if(age2 == 21 ) || (age2 == 50){
+    } else if (age2 == 21) || (age2 == 50) {
         println!("IMPORTANT BIRTHDAY ");
-    }else if age2 >= 65{
+    } else if age2 >= 65 {
         println!("Important birthday");
     } else {
         println!("moira jan bro");
     }
-    // ternary operator 
+    // ternary operator
     let mut my_age = 47;
-    let can_vote = if my_age >= 18{
-        true
-    }else{
-        false
-    };
-    println!{"can vote : {} ", can_vote}
+    let can_vote = if my_age >= 18 { true } else { false };
+    println! {"can vote : {} ", can_vote}
     // match
     let age3 = 8;
     match age3 {
-        1..= 18 => println!("Important birthday"),
+        1..=18 => println!("Important birthday"),
         21 | 50 => println!("IMPORTANT BIRTHDAY"),
         65..=i32::MAX => println!("Important Birthday"),
-        // _ means = match everything else 
+        // _ means = match everything else
         _ => println!("Not an important birthday"),
     };
     // another example of match
-    let my_age2=18;
-    let voting_age2 =18;
-    match my_age2.cmp(&voting_age2){
+    let my_age2 = 18;
+    let voting_age2 = 18;
+    match my_age2.cmp(&voting_age2) {
         Ordering::Less => println!("you gained the right to vote"),
         Ordering::Greater => println!("you don't have the permission to vote"),
         Ordering::Equal => println!("you gained the right to vote"),
     }
 
     // arrays
-    // elements of an array must be of same type 
+    // elements of an array must be of same type
     // and a array has the same size
-    let arr_1 = [1,2,3,4,5,6,7];
+    let arr_1 = [1, 2, 3, 4, 5, 6, 7];
     println!("1st : {}", arr_1[01]);
     println!("1st : {}", arr_1.len());
-    let arr_2 = [1,2,3,4,5];
+    let arr_2 = [1, 2, 3, 4, 5];
     let mut loop_idx = 0;
     // loop{
     //     if arr_2[loop_idx] % 2 == 0{
@@ -127,21 +125,21 @@ fn main() {
     //     break;
     // }
     // tuples
-    let my_tuple:(u8,String,f64) = (47, "Nahiyan".to_string(),50_000.00);
-    println!("Name {}",my_tuple.1);
+    let my_tuple: (u8, String, f64) = (47, "Nahiyan".to_string(), 50_000.00);
+    println!("Name {}", my_tuple.1);
     // assign multiple tuples
-    let (v1,v2,v3) =  my_tuple;
-    println!("Age : {}",v1);
+    let (v1, v2, v3) = my_tuple;
+    println!("Age : {}", v1);
 
     // strings
     // there are two types of string
-    // String  --> vector of bytes that can be change 
+    // String  --> vector of bytes that can be change
     // &str  --> and string type which is going to point to the string
     // and allow for viewing of said string
-    let  mut st1 = String::new();
+    let mut st1 = String::new();
     st1.push('A');
     st1.push_str("words");
-    for word in st1.split_whitespace(){
+    for word in st1.split_whitespace() {
         println!("{}", word);
     }
     // if you like to replace a string
@@ -153,12 +151,12 @@ fn main() {
     let mut v1: Vec<char> = st3.chars().collect();
     v1.sort();
     v1.dedup();
-    for char in v1{
-        println!("{}",char);
+    for char in v1 {
+        println!("{}", char);
     }
     let st4: &str = "Random string";
     let mut st5: String = st4.to_string();
-    println!("{}",st5);
+    println!("{}", st5);
     let byte_arr1 = st5.as_bytes();
     let st6 = &st5[0..6];
     println!("string length {}", st6.len());
@@ -167,35 +165,35 @@ fn main() {
     let st6 = String::from("just some");
     let st7 = String::from("words");
     let st8 = st6 + &st7;
-    for char in st8.bytes(){
+    for char in st8.bytes() {
         println!("{}", char);
     }
     // casting
     let int_u8: u8 = 5;
     let int2_u8: u8 = 4;
     let int3_u32: u32 = (int_u8 as u32) + (int2_u8 as u32);
-    
+
     // Enums
     enum DayName {
-    Monday,
-    Tuesday,
-    Wednesday,
-    Thursday,
-    Friday,
-    Saturday,
-    Sunday
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday,
+        Sunday,
     }
-// . is used when you have a value on the left-hand-side. :: is used when you have a type or module. Or: . is for value member access, :: is for namespace member access.
+    // . is used when you have a value on the left-hand-side. :: is used when you have a type or module. Or: . is for value member access, :: is for namespace member access.
     impl DayName {
         fn is_weekend(&self) -> bool {
             match self {
                 DayName::Saturday | DayName::Sunday => true,
-                _ => false
+                _ => false,
             }
         }
     }
     let today = DayName::Monday;
-    match today{ 
+    match today {
         DayName::Monday => println!("Everyone Hates Monday"),
         DayName::Tuesday => println!("Everyone Hates Tuesday"),
         DayName::Wednesday => println!("Everyone Hates Wednesday"),
@@ -210,41 +208,41 @@ fn main() {
     // like array but they can grow if mutable
     // and stores data as same type
     let vec1: Vec<i32> = Vec::new();
-    let mut vec2 = vec![1,2,3,4];
+    let mut vec2 = vec![1, 2, 3, 4];
     vec2.push(5);
     // print from specific index
     println!("1st : {}", vec2[0]);
-    // verify value exists 
+    // verify value exists
     let second: &i32 = &vec2[1];
-    match vec2.get(1){
-        Some(second) => println!("2nd : {}",second),
-        None => println!("No 2nd value")
+    match vec2.get(1) {
+        Some(second) => println!("2nd : {}", second),
+        None => println!("No 2nd value"),
     }
-    // we can cycle and can change value 
-    for i in &mut vec2{
+    // we can cycle and can change value
+    for i in &mut vec2 {
         *i *= 2;
     }
-    for i in &vec2{
-        println!("{}",i);
+    for i in &vec2 {
+        println!("{}", i);
     }
     println!("Vec length {}", vec2.len());
     println!("Pop : {:?}", vec2.pop());
-    
+
     // function called here
     // get_some(5,4);
     println!("{}", get_some_2(5, 4));
 
-    // get the two value from the function 
+    // get the two value from the function
     let (val_1, val_2) = get_some_3(3);
-    println!("Nums {} {} ", val_1,val_2);
+    println!("Nums {} {} ", val_1, val_2);
 
     // function and list
-    let num_list = vec![1,2,3,4,5];
+    let num_list = vec![1, 2, 3, 4, 5];
     println!("sum of list = {}", sum_list(&num_list));
 
-    // generic function print 
-    println!("5 + 4 = {}",get_sum_gen(5, 4));
-    println!("5.2 + 4.6 = {}",get_sum_gen(5.2, 4.6));
+    // generic function print
+    println!("5 + 4 = {}", get_sum_gen(5, 4));
+    println!("5.2 + 4.6 = {}", get_sum_gen(5.2, 4.6));
 
     // ownership check 01
     owner_ship();
@@ -256,78 +254,78 @@ fn main() {
     let mut str_1 = String::from("Nahiyan ");
     change_string(&mut str_1);
 
-    // hashMaps function 
+    // hashMaps function
     // hash maps are going to be used to store key value pairs
     let mut heroes = HashMap::new();
-    // k is the key and v is the value 
+    // k is the key and v is the value
     heroes.insert("Super Man ", "nigga");
     heroes.insert("Bat-Man ", "rich kid");
     heroes.insert("Wonder Woman  ", "old lady");
 
     // we can iterate over hashmaps
-    for(k, v) in heroes.iter(){
-        println!("{} = {}", k,v)
+    for (k, v) in heroes.iter() {
+        println!("{} = {}", k, v)
     }
     // println!("heroes {}", heroes.len());
-    if heroes.contains_key(&"Bat-Man"){
+    if heroes.contains_key(&"Bat-Man") {
         let the_batman = heroes.get(&"Bat-Man");
         match the_batman {
             Some(x) => println!("He is a hero"),
-            None => println!("he is gay")
+            None => println!("he is gay"),
         }
     }
 
     // struct
-    struct Customer{
+    struct Customer {
         name: String,
         address: String,
-        balance: f32
+        balance: f32,
     }
 
-    let mut bob: Customer = Customer{
+    let mut bob: Customer = Customer {
         name: String::from("hacker boii"),
         address: String::from("aayy alakai aayy tui"),
-        balance: 420.69
+        balance: 420.69,
     };
 
     // change a value
     bob.address = String::from("420 road 69no. house");
 
-    struct Rectangle<T, U>{
+    struct Rectangle<T, U> {
         length: T,
         height: U,
     }
-    let rec = Rectangle{
-        length:4,
-        height:10.5
+    let rec = Rectangle {
+        length: 4,
+        height: 10.5,
     };
     trait Shape {
-        fn new(length: f32, width:f32) -> Self;
+        fn new(length: f32, width: f32) -> Self;
         fn area(&self) -> f32;
     }
-    struct Rectange01{
+    struct Rectange01 {
         length01: f32,
-        width01: f32
+        width01: f32,
     }
-    struct Circle{
-    length02: f32,
-    width02: f32
+    struct Circle {
+        length02: f32,
+        width02: f32,
     }
 
     // for rectangle
-    impl Shape for Rectange01{
-        fn new(length01: f32,width01: f32) -> Rectange01{
-            return Rectange01{length01,width01};
+    impl Shape for Rectange01 {
+        fn new(length01: f32, width01: f32) -> Rectange01 {
+            return Rectange01 { length01, width01 };
         }
         fn area(&self) -> f32 {
             return self.length01 * self.width01;
         }
     }
 
-    // for circle 
-    impl Shape for Circle{
-        fn new(length02: f32,width02: f32) -> Circle{
-            return Circle{length02,width02};
+    // for circle
+    impl Shape for Circle {
+        fn new(length02: f32, width02: f32) -> Circle {
+            return Circle { length02, width02 };
         }
         fn area(&self) -> f32 {
             return (self.length02 / 2.0).powf(2.0) * PI;
@@ -339,6 +337,9 @@ fn main() {
     let circ: Circle = Shape::new(10.0, 10.0);
     println!("rec area : {} ", rec.area());
     println!("circle area : {} ", circ.area());
+
+    // calling modules
+    order_food();
 }
 
 // function
@@ -353,25 +354,27 @@ fn get_some_2(x: i32, y: i32) -> i32 {
     x + y
 }
 
-//function (return two value from 1 input) 
-fn get_some_3(x:i32) -> (i32,i32) {
-    return (x+1 , x+2);
+//function (return two value from 1 input)
+fn get_some_3(x: i32) -> (i32, i32) {
+    return (x + 1, x + 2);
 }
 
 fn sum_list(list: &[i32]) -> i32 {
     let mut sum = 0;
-    for &val in list.iter(){
+    for &val in list.iter() {
         sum += &val;
     }
     sum
 }
 
 // generic function
-// we have to use this 
+// we have to use this
 
 use std::ops::Add;
 
-fn get_sum_gen<T:Add<Output = T>>(x: T, y: T) -> T{
+use crate::moduels::order_food;
+
+fn get_sum_gen<T: Add<Output = T>>(x: T, y: T) -> T {
     // we cant just return x + y, this add operator can not be used in this generic function
     return x + y;
 }
@@ -384,30 +387,30 @@ fn get_sum_gen<T:Add<Output = T>>(x: T, y: T) -> T{
 // HEAP : when putting data on the heap you request a certain amount of space.
 // The OS finds space available and returns an address for that space called pointer
 
-// RULES 
-  // 1. Each values has a variable that's called it's owner 
-  // 2. There is only one owner at a time 
-  // 3. When the owner goes out of scope that value disappears
+// RULES
+// 1. Each values has a variable that's called it's owner
+// 2. There is only one owner at a time
+// 3. When the owner goes out of scope that value disappears
 
-fn owner_ship(){
+fn owner_ship() {
     let str_1 = String::from("world");
     let str_2 = str_1.clone();
     println!("Hello {}", str_2);
-    let str_3 = str_1;  // we copy str_1 into str_2, so str_1 does don't exists anymore 
+    let str_3 = str_1; // we copy str_1 into str_2, so str_1 does don't exists anymore
     println!("Hello {}", str_3);
     // println!("Hello {}", str_1) this will not work because position of codes matters, u assigner str_3 = str_1
 }
 
-fn print_str(x: String){
+fn print_str(x: String) {
     println!("A string {}", x);
 }
 
-fn print_return_str(x : String) -> String{
+fn print_return_str(x: String) -> String {
     println!("A string {}", x);
     x
 }
 
-fn change_string(name: &mut String){
+fn change_string(name: &mut String) {
     name.push_str("is happy");
     println!("message : {}", name);
 }
