@@ -8,7 +8,8 @@ use std::collections::HashMap;
 use std::f64::consts::PI;
 use std::fs::File;
 use std::io;
-use std::io::{BufRead, BufReader, ErrorKind, Write};
+use std::io::{BufRead, BufReader, ErrorKind, Write,Error};
+
 
 fn main() {
     println!("What is your Name?");
@@ -340,6 +341,125 @@ fn main() {
 
     // calling modules
     order_food();
+
+    // error handling
+    // Result has 2 variants Ok and Err
+        // enum Result<T, E>{
+        // OK(T),
+        // Err(E),
+        // }
+        // Where T represents the data typeof the value returns and E 
+        //the type of error
+    // let lil_arr:[i32;2] = [1,2];
+    // println!("{}", lil_arr[1]);
+    // panic!("Terrible Error");
+    // real world ex. with error handling
+    // let path = "lines of texts";
+    // let output = File::create(path);
+    // let mut output = match output {
+    //     Ok(file) => file,
+    //     Err(error) => {panic!("problem creating file {:?}", error);}
+    // };
+    // write!(output,"just some\nrandom world").expect("failed to write to file");
+    // let input = File::open(path).unwrap();
+    // let buffered = BufReader::new(input);
+    // for line in buffered.lines(){
+    //     println!("{}",line.unwrap());
+    // }
+    // let output2 = File::create("rand.txt");
+    // let output2 = match output2{
+    //     Ok(file) => file,
+    //     Err(error) => match error.kind(){
+    //         ErrorKind::NotFound => match File::create("rand.txt"){
+    //             Ok(fc) => fc,
+    //             Err(e) => panic!("cant create file : {:?}", error)
+    //         },
+    //         _other_problem => panic!("problem opening file {:?}", error),
+    //     },
+    // };
+
+    // iterators
+    let mut arr_it = [1,2,3,4];
+    for val in arr_it.iter(){
+        println!("{}", val);
+    }
+    // we can consume the collection but we cannot use the collection
+    arr_it.into_iter();
+
+    // we can create and iterator 
+    let mut iter1 = arr_1.iter();
+    println!("1st {:?}",iter1.next());
+
+    // closers
+    // let var_name = |parameter| -> return_type {code}
+
+    // basic type of closer
+    let can_vote1 = |age2: i32| {
+        age >= 18
+    };
+    println!("can vote {}", can_vote1(8));
+
+    // complicated closer
+    // closer can access variables outside of the body unlike functions
+    let mut sample1 = 5;
+    let print_var = || println!("sample1 = {}", sample1);
+    print_var();
+    sample1 = 10;
+    // we can change value if we mark a closer with mut variable 
+    let mut change_var = || sample1 +=1;
+    change_var();
+    println!("sample1 = {}", sample1);
+    sample1 = 10;
+    println!("sample1 = {}", sample1);
+
+    // we can pass closer to functions
+    fn use_func<T>(a: i32, b: i32 , func: T) -> i32
+    where T: Fn(i32, i32) -> i32{
+        func(a, b)
+    }
+    let sum = |a ,b| a+b;
+    let prod  = |a ,b| a+b;
+    println!("5 + 4 = {}", use_func(5, 4, sum));
+    println!("5 * 4 = {}", use_func(5, 4, prod));
+
+    // smart pointers
+    // a pointer is an address to a location in a memory
+    // they could be use to track the ownership of the data
+
+
+    // Stack : stores values in an last in first out format
+    // data on the stack must have a defined fixed size
+
+    let b_int1 = Box::new(10);
+    println!("b_int1 = {}", b_int1);
+
+    struct TreeNode<T> {
+        pub left: Option<Box<TreeNode<T>>>,
+        pub right: Option<Box<TreeNode<T>>>,
+        pub key: T,
+    }
+    impl<T> TreeNode<T>{
+        pub fn new(key:T) -> Self {
+            TreeNode { left: None, right: None, key,
+            }
+        }
+        pub fn left(mut self, node: TreeNode<T>) -> 
+        Self{
+            self.left = Some(Box::new(node));
+            self
+        }
+        pub fn right(mut self, node: TreeNode<T>) -> 
+        Self{
+            self.right = Some(Box::new(node));
+            self
+        }
+    }
+    let node1 = TreeNode::new(1).left(TreeNode::new(2)).right(TreeNode::new(3));
+
+
+    // concurrency
+
+    
 }
 
 // function
@@ -371,6 +491,7 @@ fn sum_list(list: &[i32]) -> i32 {
 // we have to use this
 
 use std::ops::Add;
+use std::process::Output;
 
 use crate::modules::order_food;
 
