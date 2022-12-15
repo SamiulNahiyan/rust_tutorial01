@@ -9,7 +9,12 @@ use std::f64::consts::PI;
 use std::fs::File;
 use std::io;
 use std::io::{BufRead, BufReader, ErrorKind, Write,Error};
+use std::thread;
+use std::time::Duration;
 
+use std::rc::Rc;
+use std::cell::RefCell;
+use std::sync::{Arc, Mutex};
 
 fn main() {
     println!("What is your Name?");
@@ -459,7 +464,52 @@ fn main() {
 
     // concurrency
 
-    
+    // common problems with parallel programming involve:
+    // 1. Threads are accessing data in the wrong order
+    // 2.threads are blocked form executing because of confusion
+    // over requirements to proceed with execution 
+    let thread1 = thread::spawn(||{
+        for i in 1..25{
+            println!("spawned thread {}",i);
+            thread::sleep(Duration::from_millis(1));
+        }
+    });
+
+    for i in 1..20{
+        println!("Main thread : {}", i );
+    }
+    thread1.join().unwrap();
+
+    // real world example
+    pub struct Bank {
+        balance: f32
+    }
+    fn withdraw(the_bank: &Arc<Mutex<Bank>>, amt :f32){
+        let mut bank_ref = the_bank.lock().unwrap();
+        if bank_ref.balance < 5.00 {
+            println!("current Balance : {} withdrawal a smaller amount",
+        bank_ref.balance);
+        }else{
+            bank_ref.balance -= amt;
+            print!("customer withdrew {} Current balance {} ",amt, bank_ref.balance);
+        }
+    }
+
+    fn customer(the_bank: &Arc<Mutex<Bank>>){
+        withdraw(&the_bank, 5.00);
+    }
+    let bank: Arc<Mutex<Bank>> = Arc::new(Mutex::new(Bank{balance: 20.00}));
+
+    let handles = (0..10).map(|_| {
+        let bank_ref = bank.clone();
+        thread::spawn(|| {
+            customer(bank_ref)
+        })
+    });
+    for handle in handles{
+        handle.join().unwrap();
+    }
+    println!("total {}", bank.lock().unwrap().balance);
 }
 
 // function
